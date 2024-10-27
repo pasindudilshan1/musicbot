@@ -1,1 +1,1 @@
-bot.py
+CMD ["python", "bot.py"]
