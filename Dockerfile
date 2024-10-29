@@ -1,19 +1,17 @@
-FROM python:3.8  # Use a compatible Python version
+# Use an official Python runtime as a parent image
+FROM python:3.9-slim
 
-# Set the working directory
+# Set the working directory in the container
 WORKDIR /app
 
-# Copy requirements.txt
+# Copy the requirements.txt file to the container
 COPY requirements.txt .
 
-# Install virtualenv
-RUN pip install virtualenv
+# Install the required packages
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Create a virtual environment
-RUN virtualenv venv
-
-# Activate the virtual environment and install dependencies
-RUN . venv/bin/activate && pip install --no-cache-dir -r requirements.txt
-
-# Copy the rest of your application
+# Copy the current directory contents into the container at /app
 COPY . .
+
+# Command to run your bot
+CMD ["python", "bot.py"]
