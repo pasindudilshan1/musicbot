@@ -1,21 +1,19 @@
-# Start from a base image
-FROM python:3.8
+FROM python:3.8  # Use a compatible Python version
 
 # Set the working directory
 WORKDIR /app
 
-# Copy the requirements file to the working directory
+# Copy requirements.txt
 COPY requirements.txt .
-RUN pip install --upgrade pip
 
-# Install dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# Install virtualenv
+RUN pip install virtualenv
 
-# Copy the bot code to the working directory
+# Create a virtual environment
+RUN virtualenv venv
+
+# Activate the virtual environment and install dependencies
+RUN . venv/bin/activate && pip install --no-cache-dir -r requirements.txt
+
+# Copy the rest of your application
 COPY . .
-
-# Expose a port (if needed, only for web server or Flask use)
-# EXPOSE 5000
-
-# Start the bot
-CMD ["python", "bot.py"]
